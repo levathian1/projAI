@@ -58,6 +58,10 @@ def gui_init():
 def board_init():
     board = Game()
 
+def move_test():
+    board = Game()
+    board.move_pawn(0, 2, 1, 2)
+
 tree_init()
 minimax_init()
 gui_init()
@@ -65,3 +69,4 @@ tree_instanciation()
 tree_max_depth_search()
 appending_to_tree()
 board_init()
+move_test()
