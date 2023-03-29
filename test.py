@@ -1,6 +1,7 @@
 from tree import *
 from minimax import *
 from gui import *
+from game import *
 
 def tree_init():
     tree = Tree(None, None, None)
@@ -54,9 +55,13 @@ def minimax_init():
 def gui_init():
     gui = Gui()
 
+def board_init():
+    board = Game()
+
 tree_init()
 minimax_init()
 gui_init()
 tree_instanciation()
 tree_max_depth_search()
 appending_to_tree()
+board_init()
