@@ -1,0 +1,49 @@
+ard-ri:
+    Etats:
+        Matrice 7x7
+            [
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+                0, 0, 0, 0, 0, 0, 0
+            ]
+            Pion blanc: b
+            Pion noir: n
+            roi: r 
+
+    Etat final:
+        Matrice 7x7 ou le roi est sur un des 4 coins du plateau (0, 0 | 6, 0 | 0, 6 | 6, 6) -> gagnant pour le roi
+        Matrice 7x7 ou le roi est entoure par des pions noir sur les 4 cotes -> gagnant pour les noirs
+        Matrice 7x7 ou le roi est entoure par 3 pions noirs et le bord du plateau ou le bord du plateau != coin -> gagnant pour les noirs
+    
+    Dictionnaire avec etats deja parcourus
+
+    Actions possibles:  
+        - Deplacement pion noir
+        - Deplacement pion blanc
+        - Deplacement roi
+        - Capture pion sans coin 
+        - Capture roi sans coin
+        - Capture pion avec coin 
+        - Capture roi avec coin
+
+    Fonction d'evaluation:
+        - init: nb_pion_j - nb_pion_adv
+        - reevaluation: nouvelle somme = nb_pion_j - nb_pion_adv
+        - Si victoire possible: +100
+        - Si defaite possible: -100
+
+        - avenue possible: +5 pour capture si possible
+
+    Premier coup pion noir:
+        - 16 coups possibles
+    Premier coup pion blanc:
+        - 7 coups possibles
+
+    Ameliorations possibles:
+        - Tirage au hasard si coups proches (+/- 1 ou 2) pour eviter les memes coups au debut surtout (sauvegarder le nombre de coups de la partie)
+        - Plateau symetrique
+        - Representation du plateau sur 3 listes avec les positions des pions blancs, noirs et le roi par listes
