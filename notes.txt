@@ -10,16 +10,14 @@ ard-ri:
                 0, 0, 0, 0, 0, 0, 0
                 0, 0, 0, 0, 0, 0, 0
             ]
-            Pion blanc: b
-            Pion noir: n
-            roi: r 
+            Pion blanc: w
+            Pion noir: b
+            roi: k 
 
     Etat final:
         Matrice 7x7 ou le roi est sur un des 4 coins du plateau (0, 0 | 6, 0 | 0, 6 | 6, 6) -> gagnant pour le roi
         Matrice 7x7 ou le roi est entoure par des pions noir sur les 4 cotes -> gagnant pour les noirs
         Matrice 7x7 ou le roi est entoure par 3 pions noirs et le bord du plateau ou le bord du plateau != coin -> gagnant pour les noirs
-    
-    Dictionnaire avec etats deja parcourus
 
     Actions possibles:  
         - Deplacement pion noir
@@ -47,3 +45,4 @@ ard-ri:
         - Tirage au hasard si coups proches (+/- 1 ou 2) pour eviter les memes coups au debut surtout (sauvegarder le nombre de coups de la partie)
         - Plateau symetrique
         - Representation du plateau sur 3 listes avec les positions des pions blancs, noirs et le roi par listes
+        - Dictionnaire avec etats deja parcourus
