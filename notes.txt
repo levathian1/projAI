@@ -10,9 +10,9 @@ ard-ri:
                 0, 0, 0, 0, 0, 0, 0
                 0, 0, 0, 0, 0, 0, 0
             ]
-            Pion blanc: w
-            Pion noir: b
-            roi: k 
+            Pion blanc: 2
+            Pion noir: 3
+            roi: 1
 
     Etat final:
         Matrice 7x7 ou le roi est sur un des 4 coins du plateau (0, 0 | 6, 0 | 0, 6 | 6, 6) -> gagnant pour le roi

@@ -62,6 +62,16 @@ def move_test():
     board = Game()
     board.move_pawn(0, 2, 1, 2)
 
+def get_pawn():
+    board = Game()
+    pawn = board.getPawn(0, 2)
+    print(pawn)
+
+def get_count():
+    board = Game()
+    nb = board.getCount("3")
+    print(nb)
+
 tree_init()
 minimax_init()
 gui_init()
@@ -70,3 +80,5 @@ tree_max_depth_search()
 appending_to_tree()
 board_init()
 move_test()
+get_pawn()
+get_count()
