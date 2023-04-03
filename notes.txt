@@ -29,12 +29,14 @@ ard-ri:
         - Capture roi avec coin
 
     Fonction d'evaluation:
-        - init: nb_pion_j - nb_pion_adv
-        - reevaluation: nouvelle somme = nb_pion_j - nb_pion_adv
-        - Si victoire possible: +100
-        - Si defaite possible: -100
+        - eval: nb_pion_j - nb_pion_adv
+        - Si victoire possible: +inf
+        - Si defaite possible: -inf
 
         - avenue possible: +5 pour capture si possible
+
+        - Add pawn capture to board representation
+        - Set eval to take total board representation into account
 
     Premier coup pion noir:
         - 16 coups possibles
@@ -46,3 +48,16 @@ ard-ri:
         - Plateau symetrique
         - Representation du plateau sur 3 listes avec les positions des pions blancs, noirs et le roi par listes
         - Dictionnaire avec etats deja parcourus
+
+    Colour:
+        - 1 = white
+        - 2 = black
+
+    Always picking the same one:
+        - save chosen pawns to not repick straightaway
+        - randomly pick among the possible moves
+
+    - Add coord inversion to representation sent to server
+
+    Server input:
+        - Numpy matrix access is inverted to regular, x is vertical, y is horizontal

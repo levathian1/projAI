@@ -9,17 +9,17 @@ class Minimax:
     def __init__(self) -> None:
         self.board = np.array([[0, 0, 3, 3, 3, 0, 0], [0, 0, 0, 3, 0, 0, 0], [3, 0, 2, 2, 2, 0, 3], [3, 3, 2, 1, 2, 3, 3], [3, 0, 2, 2, 2, 0, 3], [0, 0, 0, 3, 0, 0, 0], [0, 0, 3, 3, 3, 0, 0]])
 
-    def bestMove(self, depth = 5):
+    def bestMove(self, depth = 5, colour=1):
         best = None
-        best_eval = float(-inf)
-        for move in self.possible_moves():
+        best_eval = float("-inf")
+        for move in self.possible_moves(colour):
             #print("eval")
             #print(move)
             #print("current board 1")
             #print(self.board)
             current_board = copy.deepcopy(self.board)
             self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
-            eval = self.minimax_aB(False, depth-1) #(self, player=True, depth=5
+            eval = self.minimax_aB(False, depth-1, colour) #(self, player=True, depth=5
             if eval > best_eval:
                 best = move
                 best_eval = eval
@@ -31,57 +31,60 @@ class Minimax:
         #print(best)
         return best
     
-    def possible_moves(self):
+    def possible_moves(self, colour=1):
         moves = []
         for i in range (0, 7):
             for j in range(0, 7):
-                if self.getPawn(i, j) == 1:
-                    if self.getPawn(i-1, j) == 0:
-                        moves.append(((i, j), (i-1, j)))
-                    if i < 6 and self.getPawn(i+1, j) == 0:
-                        moves.append(((i, j), (i+1, j)))
-                    if self.getPawn(i, j-1) == 0:
-                        moves.append(((i, j), (i, j-1)))
-                    if j < 6 and self.getPawn(i, j+1) == 0:
-                        moves.append(((i, j), (i, j+1)))
-                elif self.getPawn(i, j) == 3:
-                    if i > 0 and self.getPawn(i-1, j) == 0:
-                        moves.append(((i,j), (i-1,j)))
-                    if i < 6 and self.getPawn(i+1, j) == 0:
-                        moves.append(((i,j), (i+1,j)))
-                    if j > 0 and self.getPawn(i, j-1) == 0:
-                        moves.append(((i,j), (i,j-1)))
-                    if j < 6 and self.getPawn(i, j+1) == 0:
-                        moves.append(((i,j), (i,j+1)))
-                    if i > 1 and self.getPawn(i-1, j) == 1 and self.getPawn(i-2, j) == 0:
-                        moves.append(((i,j), (i-2,j)))
-                    if i < 5 and self.getPawn(i+1, j) == 1 and self.getPawn(i+2, j) == 0:
-                        moves.append(((i,j), (i+2,j)))
-                    if j > 1 and self.getPawn(i, j-1) == 1 and self.getPawn(i, j-2) == 0:
-                        moves.append(((i,j), (i,j-2)))
-                    if j < 5 and self.getPawn(i, j+1) == 1 and self.getPawn(i, j+1) == 0:
-                        moves.append(((i,j), (i,j+2)))
-                elif self.getPawn(i, j) == 2:
-                    if i > 0 and self.getPawn(i-1, j) == 1:
-                        moves.append(((i,j), (i-1,j)))
-                    if i < 6 and self.getPawn(i+1, j) == 1:
-                        moves.append(((i,j), (i+1,j)))
-                    if j > 0 and self.getPawn(i, j-1) == 1:
-                        moves.append(((i,j), (i,j-1)))
-                    if j < 6 and self.getPawn(i, j+1) == 1:
-                        moves.append(((i,j), (i,j+1)))
+                if colour == 1:
+                    if self.getPawn(i, j) == 1: #roi
+                        if self.getPawn(i-1, j) == 0:
+                            moves.append(((i, j), (i-1, j)))
+                        if i < 6 and self.getPawn(i+1, j) == 0:
+                            moves.append(((i, j), (i+1, j)))
+                        if self.getPawn(i, j-1) == 0:
+                            moves.append(((i, j), (i, j-1)))
+                        if j < 6 and self.getPawn(i, j+1) == 0:
+                            moves.append(((i, j), (i, j+1)))
+                    elif self.getPawn(i, j) == 2: #blanc
+                        if i > 0 and self.getPawn(i-1, j) == 0:
+                            moves.append(((i,j), (i-1,j)))
+                        if i < 6 and self.getPawn(i+1, j) == 0:
+                            moves.append(((i,j), (i+1,j)))
+                        if j > 0 and self.getPawn(i, j-1) == 0:
+                            moves.append(((i,j), (i,j-1)))
+                        if j < 6 and self.getPawn(i, j+1) == 0:
+                            moves.append(((i,j), (i,j+1)))
+                else:
+                    if self.getPawn(i, j) == 3: #noir
+                        if i > 0 and self.getPawn(i-1, j) == 0:
+                            moves.append(((i,j), (i-1,j)))
+                        if i < 6 and self.getPawn(i+1, j) == 0:
+                            moves.append(((i,j), (i+1,j)))
+                        if j > 0 and self.getPawn(i, j-1) == 0:
+                            moves.append(((i,j), (i,j-1)))
+                        if j < 6 and self.getPawn(i, j+1) == 0:
+                            moves.append(((i,j), (i,j+1)))
+                        if i > 1 and self.getPawn(i-1, j) == 1 and self.getPawn(i-2, j) == 0:
+                            moves.append(((i,j), (i-2,j)))
+                        if i < 5 and self.getPawn(i+1, j) == 1 and self.getPawn(i+2, j) == 0:
+                            moves.append(((i,j), (i+2,j)))
+                        if j > 1 and self.getPawn(i, j-1) == 1 and self.getPawn(i, j-2) == 0:
+                            moves.append(((i,j), (i,j-2)))
+                        if j < 5 and self.getPawn(i, j+1) == 1 and self.getPawn(i, j+1) == 0:
+                            moves.append(((i,j), (i,j+2)))
         return moves
     
-    def eval(self, score, isPlayer):
+    #set current player colour in a condition to better consider captures
+    def eval(self, board, isPlayer):
         #print("eval algo")
         if(self.getPawn(0, 0) == 1 or self.getPawn(6, 6) == 1 or self.getPawn(0, 6) == 1 or self.getPawn(6, 0) == 1):
             if isPlayer:
-                return 100
+                return float("inf")
             else:
-                return -100
+                return float("-inf")
         return self.getCount("w") - self.getCount("b")
 
-    def minimax_aB(self, player=True, depth=5):
+    def minimax_aB(self, player=True, depth=25, colour=1):
         #successeur is knot of tree
         #successeur is populated by game class based on board state
         #state is the top node of the tree 
@@ -90,26 +93,26 @@ class Minimax:
             res = self.eval(self, player)
             return res
         if(player == True):
-            max_eval = float(-inf)
-            for move in self.possible_moves():
+            max_eval = float("-inf")
+            for move in self.possible_moves(colour):
                 #print("current board in minimax 1")
                 #print(self.board)
                 current_board = copy.deepcopy(self.board)
                 self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
-                evaluate = self.minimax_aB(False, depth-1)
+                evaluate = self.minimax_aB(False, depth-1, colour)
                 #print("current board in minimax 2")
                 self.board = copy.deepcopy(current_board)
                 #print(self.board)
                 max_eval = max(evaluate, max_eval)
             return max_eval
         else:
-            min_eval = float(inf)
-            for move in self.possible_moves():
+            min_eval = float("inf")
+            for move in self.possible_moves(colour):
                 #print("current board in minimax 3")
                 #print(self.board)
                 current_board = copy.deepcopy(self.board)
                 self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
-                eval = self.minimax_aB(True, depth-1)
+                eval = self.minimax_aB(True, depth-1, colour)
                 #print("current board in minimax 4")
                 self.board = copy.deepcopy(current_board)
                 #print(self.board)
@@ -138,17 +141,18 @@ def main():
     minimax = Minimax()
     print("initial board")
     print(minimax.board)
-    turn = False
+    turn = True
+    colour = 0 #get colour from input
     while True:
-        if turn == False:
+        if turn == True:
             print("turn")
-            move = Minimax.bestMove(minimax, 3)
+            move = Minimax.bestMove(minimax, 3, colour)
             print("move")
             print(move)
             minimax.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
             print(minimax.board)
             print("end turn")
-            turn = True
+            turn = False
         else:
             moves = input("enter next move: ")
             moves = moves.split(", ")
@@ -157,7 +161,7 @@ def main():
             print(minimax.board)
             time.sleep(10)
             print("end turn")
-            turn = False
+            turn = True
 
 
 if __name__ == "__main__":
