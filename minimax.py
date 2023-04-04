@@ -25,7 +25,7 @@ class Minimax:
             current_board = copy.deepcopy(self.board)
             self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
             self.update_board()
-            eval = self.minimax_aB(False, depth-1, colour) #(self, player=True, depth=5
+            eval = self.minimax_aB(float("-inf"), float("inf"), False, depth-1, colour) #(self, player=True, depth=5
             if eval >= best_eval and move not in self.banned_moves:
                 if eval > best_eval:
                     print("hi")
@@ -120,7 +120,7 @@ class Minimax:
                 return float("-inf")
         return self.getCount(2) - self.getCount(3)
 
-    def minimax_aB(self, player=True, depth=25, colour=1):
+    def minimax_aB(self, a, b, player=True,depth=25, colour=1):
         #successeur is knot of tree
         #successeur is populated by game class based on board state
         #state is the top node of the tree 
@@ -136,11 +136,13 @@ class Minimax:
                 current_board = copy.deepcopy(self.board)
                 self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
                 self.update_board()
-                evaluate = self.minimax_aB(False, depth-1, colour)
                 #print("current board in minimax 2")
                 self.board = copy.deepcopy(current_board)
                 #print(self.board)
-                max_eval = max(evaluate, max_eval)
+                max_eval = max(self.minimax_aB(a, b, False, depth-1, colour), max_eval)
+                a = max(b, max_eval)
+                if b <= a:
+                    return max_eval
             return max_eval
         else:
             min_eval = float("inf")
@@ -149,11 +151,13 @@ class Minimax:
                 #print(self.board)
                 current_board = copy.deepcopy(self.board)
                 self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
-                eval = self.minimax_aB(True, depth-1, colour)
                 #print("current board in minimax 4")
                 self.board = copy.deepcopy(current_board)
                 #print(self.board)
-                min_eval = min(eval, min_eval)
+                min_eval = max(self.minimax_aB(a, b, False, depth-1, colour), min_eval)
+                b = min(b, min_eval)
+                if b <= a:
+                    return min_eval
             return min_eval
 
     #no eval for black pawns yet
