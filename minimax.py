@@ -1,4 +1,5 @@
 from math import inf
+import random
 import numpy as np
 import copy
 import game
@@ -14,7 +15,7 @@ class Minimax:
         self.banned_moves = list()
 
     def bestMove(self, depth = 5, colour=1):
-        best = None
+        best = list()
         best_eval = float("-inf")
         for move in self.possible_moves(colour):
             #print("eval")
@@ -25,9 +26,15 @@ class Minimax:
             self.move_pawn(move[0][0], move[0][1], move[1][0], move[1][1])
             self.update_board()
             eval = self.minimax_aB(False, depth-1, colour) #(self, player=True, depth=5
-            if eval > best_eval and move not in self.banned_moves:
-                best = move
-                best_eval = eval
+            if eval >= best_eval and move not in self.banned_moves:
+                if eval > best_eval:
+                    print("hi")
+                    best = list()
+                    best.append(move)
+                    best_eval = eval
+                else:
+                    best_eval = eval
+                    best.append(move)
             self.board = copy.deepcopy(current_board)
             #print("current board 2")
             #print(self.board)
@@ -35,7 +42,7 @@ class Minimax:
         #print("best")
         #print(best)
         self.banned_moves.append(move)
-        return best
+        return random.choice(best)
     
     def possible_moves(self, colour=1):
         moves = []
