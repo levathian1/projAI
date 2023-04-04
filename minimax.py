@@ -109,7 +109,19 @@ class Minimax:
                         self.set_pawn(i+1, j)
                     if self.getPawn(i, j+1) == 2 and self.getPawn(i, j+2) == 3:
                         self.set_pawn(i, j+1)
+
+    def king_dist(self, board):
+        k = self.get_pos()
+        #y, x, y, x
+        dist1 = abs(k[1] - 0) + abs(k[0] - 0)
+        col1min = min(dist1, abs(k[1] - 0) + abs(k[0] - 6))
+        linemin = min(col1min, abs(k[1] - 6) + abs(k[0] - 0))
+        finalmin = min(linemin, abs(k[1] - 6) + abs(k[0] - 6))
+        return finalmin
     
+    def get_pos(self):
+        return np.where(self.board == 1)
+     
     #set current player colour in a condition to better consider captures
     def eval(self, board, isPlayer):
         #print("eval algo")
@@ -118,7 +130,7 @@ class Minimax:
                 return float("inf")
             else:
                 return float("-inf")
-        return self.getCount(2) - self.getCount(3)
+        return self.getCount(2) - self.getCount(3) + self.king_dist(board)
 
     def minimax_aB(self, a, b, player=True,depth=25, colour=1):
         #successeur is knot of tree

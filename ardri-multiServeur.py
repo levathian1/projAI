@@ -58,9 +58,11 @@ def serveur(port):
     msg1 = "Serveur: A vous de jouer"
     msg2 = "Serveur: A votre adversaire de jouer"
     if player == 1:
+        c1.send(str(player).encode())
         c1.send(str(msg1).encode())
         c2.send(str(msg2).encode())
     else:
+        c2.send(str(player).encode())
         c1.send(str(msg2).encode())
         c2.send(str(msg1).encode()) 
 
